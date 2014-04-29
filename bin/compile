@@ -36,8 +36,7 @@ echo "Listing Build Pack Directory:"
 ls -la /tmp/buildpacks
 
 curl -s -0 https://s3-eu-west-1.amazonaws.com/clasida/new+folder/mosquitto131bin.tar
-tar -xf mosquitto131bin.tar
-ls 
+tar -xvf mosquitto131bin.tar
 
 mv mosquitto131bin $BUILD_DIR/
 
