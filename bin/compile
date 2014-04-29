@@ -37,9 +37,9 @@ ls -la /tmp/buildpacks
 
 curl -s -0 https://s3-eu-west-1.amazonaws.com/clasida/new+folder/mosquitto131bin.tar
 tar -xf mosquitto131bin.tar
-ls -la 
+ls 
 
-#mv jonas-full-5.2.4 $BUILD_DIR/
+mv mosquitto131bin $BUILD_DIR/
 
 
 
