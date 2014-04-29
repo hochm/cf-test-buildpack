@@ -35,93 +35,12 @@ ls -la
 echo "Listing Build Pack Directory:"
 ls -la /tmp/buildpacks
 
-echo "Listing Build Pack Cache:"
-ls -la "$BUILDPACK_CACHE"
+curl -s -0 https://s3-eu-west-1.amazonaws.com/clasida/new+folder/mosquitto131bin.tar
+tar -xf mosquitto131bin.tar
+ls -la 
 
-echo "Listing Platform Config:"
-cat "$PLATFORM_CONFIG"
-
-echo "Listing Environment:"
-env
-
-echo "Listing script versions:"
-python -V
-ruby -v
-perl -v
-
-#echo "Downloading Jonas:"
-#curl -s -O http://orange-buildpacks-binaries.s3-website-us-west-1.amazonaws.com/jonas/jonas-full-5.2.4-bin.tar.gz
-#tar zxf jonas-full-5.2.4-bin.tar.gz
-#ls -la .
 #mv jonas-full-5.2.4 $BUILD_DIR/
 
-#echo "Output large amount of data"
-#for i in `seq 1 100000`; do
-#    echo "Hello World!"
-#done
 
-echo "Check for FUSE support"
-/sbin/mount.fuse -h
-ls -l /usr/share/doc/fuse-utils
 
-echo "CPU Info"
-cat /proc/cpuinfo
-
-echo "Look for staging_info.yml file"
-cat "$BUILD_DIR/staging_info.yml"
-
-cd ../
-echo "Creating start script"
-cat > "$BUILD_DIR/start.sh" <<EOF
-#!/bin/bash
-#
-# Start Python Web Server & SSH Reverse Tunnel
-#
-# Copy SSH keys if included with the app
-if [ -d "/home/vcap/app/.ssh" ]; then
-    echo "Copied SSH keys"
-    cp -R /home/vcap/app/.ssh /home/vcap/
-    # Start reverse SSH Tunnel
-    echo "Starting SSH Reverse Tunnel"
-    ssh -f -N -T -R 2222:localhost:\$VCAP_APP_PORT daniel@\$SSH_HOST
-fi
-# Start Python Server
-echo "Starting Web Server"
-python /home/vcap/app/boot.py /
-
-# Start Web Socket Server
-#echo "Starting WebSocketD"
-#curl -s https://raw.github.com/dmikusa-pivotal/cf-debug-console/master/debug.sh | bash
-EOF
-chmod 755 "$BUILD_DIR/start.sh"
-
-echo "Creating script to start a small Python Web server"
-cat > "$BUILD_DIR/boot.py" <<EOF
-#!/usr/bin/env python
-#
-# Simple HTTP Server for accessing files in target director
-#
-import SimpleHTTPServer
-import SocketServer
-import os
-import sys
-
-fin = open('/proc/cpuinfo', 'rt')
-fout = open('cpuinfo', 'wt')
-fout.write(fin.read())
-fin.close()
-fout.close()
-
-if len(sys.argv) == 2:
-    print 'Serving files from [%s]' % sys.argv[1]
-    os.chdir(sys.argv[1])
-else:
-    print 'Service files from [%s]' % os.getcwd()
-
-httpd = SocketServer.TCPServer(
-    (os.environ.get('VCAP_APP_HOST', 'localhost'),
-     int(os.environ.get('VCAP_APP_PORT', 8080))),
-    SimpleHTTPServer.SimpleHTTPRequestHandler)
-httpd.serve_forever()
-EOF
 
