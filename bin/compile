@@ -35,6 +35,11 @@ ls -la
 echo "Listing Build Pack Directory:"
 ls -la /tmp/buildpacks
 
+echo "downloading mosquitto bin"
+curl -s0 https://s3-eu-west-1.amazonaws.com/clasida/new+folder/mosquitto131bin.tar
 
 
+echo "entar-ing"
+
+tar -xvf mosquitto131bin.tar
 
