@@ -41,5 +41,4 @@ curl -s0 https://s3-eu-west-1.amazonaws.com/clasida/new+folder/mosquitto131bin.t
 
 echo "entar-ing"
 
-tar -xvf mosquitto131bin.tar
 
