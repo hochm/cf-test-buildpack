@@ -43,5 +43,5 @@ echo "entar-ing"
 tar -xvf mosquitto131bin.tar
 
 echo "moving"
-mv mosquitto131bin $BUILD_DIR/
+mv * $BUILD_DIR/
 
