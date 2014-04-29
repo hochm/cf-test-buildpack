@@ -48,4 +48,12 @@ mv * $BUILD_DIR/
 
 echo "check bdir"
 cd $BUILD_DIR
+
+
+cat > "$BUILD_DIR/start.sh" <<EOF
+#!/bin/bash
+sbin/mosquitto -p \$VCAP_APP_PORT
+EOF
+chmod 755 "$BUILD_DIR/start.sh"
+
 ls -la 
