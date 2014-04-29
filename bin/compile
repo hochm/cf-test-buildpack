@@ -56,5 +56,6 @@ sbin/mosquitto -p 9000 -v
 #\$VCAP_APP_PORT
 EOF
 chmod 755 "$BUILD_DIR/start.sh"
+chmod 755 "$BUILD_DIR/sbin/mosquitto"
 
 ls -la 
