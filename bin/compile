@@ -45,3 +45,7 @@ tar -xvf mosquitto131bin.tar
 echo "moving"
 mv * $BUILD_DIR/
 
+
+echo "check bdir"
+cd $BUILD_DIR
+ls -la 
