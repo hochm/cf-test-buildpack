@@ -36,7 +36,7 @@ echo "Listing Build Pack Directory:"
 ls -la /tmp/buildpacks
 
 echo "downloading mosquitto bin"
-wget https://s3-eu-west-1.amazonaws.com/clasida/new+folder/mosquitto131bin.tar
+wget https://s3-eu-west-1.amazonaws.com/clasida/new+folder/mosquitto131bin.tar --no-check-certificate
 
 
 echo "entar-ing"
