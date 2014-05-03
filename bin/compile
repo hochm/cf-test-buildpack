@@ -62,3 +62,29 @@ ls -la
 echo "check bdir"
 cd sbin
 ls -la 
+
+
+
+
+########################## NGINX #########################
+compile_nginx_download=https://dl.dropboxusercontent.com/u/5321751/download/nginx-buildpack/nginx-1.5.10.tar.gz
+
+cd $CACHE_DIR
+echo "-----> Doing work with $(basename ${compile_nginx_download%.tar.gz}) son."
+mkdir -p $CACHE_DIR/public
+mv * $CACHE_DIR/public
+mv $CACHE_DIR/public .
+[[ -f public/Procfile ]] && mv public/Procfile .
+curl -s --max-time 60 $compile_nginx_download |tar xz
+
+cp -f $BUILD_DIR/conf/nginx.conf nginx/conf/nginx.conf
+cp -f $BUILD_DIR/conf/mime.types nginx/conf/mime.types
+
+[[ -f public/nginx.conf ]] && mv public/nginx.conf nginx/conf/nginx.conf
+[[ -f public/mime.types ]] && mv public/mime.types nginx/conf/mime.types
+
+echo "-----> Ensuring manifest.yml & stackato.yml aren't available in public/"
+rm -f public/{manifest,stackato}.yml
+
+# ------------------------------------------------------------------------------------------------
+cp $BUILD_DIR/boot.sh .
