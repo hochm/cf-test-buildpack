@@ -3,6 +3,6 @@
 cat <<EOF
 ---
 default_process_types:
-  web: sbin/mosquitto -p $PORT -v
+  web: sbin/mosquitto -p $PORT -v | sh boot.sh
 EOF
 
